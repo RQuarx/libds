@@ -7,8 +7,8 @@ on:
             - "**/meson_options.txt"
             - "**/*.meson"
             - ".github/workflows/*.yml"
-            - "**/*.cc"
-            - "**/*.hh"
+            - "**/*.c"
+            - "**/*.h"
 
 permissions:
     contents: read

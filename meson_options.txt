@@ -1,0 +1,8 @@
+option('build-tests', type: 'boolean', value: true,
+       description: 'Build test suite')
+
+option('build-shared', type: 'boolean', value: true,
+       description: 'Build shared library')
+
+option('build-static', type: 'boolean', value: false,
+       description: 'Build static library')

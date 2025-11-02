@@ -1,6 +1,6 @@
 target*/*
 build*/*
-*.txt
+testlog.txt
 
 .cache*/*
 *.cache
