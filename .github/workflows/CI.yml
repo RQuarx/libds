@@ -15,53 +15,37 @@ permissions:
 
 jobs:
     clang:
-        name: Build with Clang
+        name: Build with Clang (Alpine)
         runs-on: ubuntu-latest
+        container: alpine:latest
+
         steps:
             - uses: actions/checkout@v4
 
-            - name: Cache pip
-              uses: actions/cache@v4
-              with:
-                  path: ~/.cache/pip
-                  key: ${{ runner.os }}-pip-meson
-                  restore-keys: |
-                      ${{ runner.os }}-pip-
-
-            - name: Install dependencies and Meson
+            - name: Install dependencies
               run: |
-                  sudo apt-get update
-                  sudo apt-get install -y python3-pip ninja-build
-                  pip3 install meson
-                  xargs -a .github/dependencies sudo apt-get install -y
+                  apk add --no-cache \
+                    meson ninja-build pkgconfig clang lld
 
             - name: Compile
               run: |
-                  CXX=clang++ CXX_LD=lld meson setup target
+                  CC=clang CC_LD=lld meson setup target
                   meson compile -C target
 
     gcc:
-        name: Build with GCC
+        name: Build with GCC (Alpine)
         runs-on: ubuntu-latest
+        container: alpine:latest
+
         steps:
             - uses: actions/checkout@v4
 
-            - name: Cache pip
-              uses: actions/cache@v4
-              with:
-                  path: ~/.cache/pip
-                  key: ${{ runner.os }}-pip-meson
-                  restore-keys: |
-                      ${{ runner.os }}-pip-
-
-            - name: Install dependencies and Meson
+            - name: Install dependencies
               run: |
-                  sudo apt-get update
-                  sudo apt-get install -y python3-pip ninja-build
-                  pip3 install meson
-                  xargs -a .github/dependencies sudo apt-get install -y
+                  apk add --no-cache \
+                    meson ninja-build pkgconfig gcc binutils
 
             - name: Compile
               run: |
-                  CXX=g++ CXX_LD=bfd meson setup target
+                  CC=gcc CC_LD=bfd meson setup target
                   meson compile -C target
