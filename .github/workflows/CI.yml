@@ -43,7 +43,7 @@ jobs:
             - name: Install dependencies
               run: |
                   apk add --no-cache \
-                    meson ninja-build pkgconfig gcc binutils
+                    meson ninja-build pkgconfig gcc binutils musl-dev
 
             - name: Compile
               run: |
